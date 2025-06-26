@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding-top: 100px;
+      background-color: #f0f8ff;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
+    h1 {
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2;
+      position: absolute;
+    }
+    #btnYes {
+      background-color: #4CAF50;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 250px;
+    }
+    #btnYes:hover {
+      background-color: #45a049;
+    }
+    #btnNo {
+      background-color: #f44336;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 350px;
+    }
+    #btnNo:hover {
+      background-color: #d32f2f;
+    }
+    .yes-style {
+      background-color: #4CAF50 !important;
+      color: white !important;
+    }
+    .yes-style:hover {
+      background-color: #45a049 !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>Minh xin lỗi Hà, mong Hà tha lỗi cho Minh :(( </h1>
+  <button id="btnYes" onclick="chonCo()">Có</button>
+  <button id="btnNo" onclick="chonKhong()">Không</button>
+
+  <script>
+    let clickCount = 0;
+    let daChuyen = false;
+
+    const btnNo = document.getElementById("btnNo");
+
+    function chonCo() {
+      // Hiện thông báo
+      window.location.href = "thankyou.html";
+    }
+
+    function chonKhong() {
+      if (daChuyen) {
+        chonCo();
+        return;
+      }
+
+      clickCount++;
+
+      if (clickCount >= 10) {
+        btnNo.innerText = "Có";
+        btnNo.classList.add("yes-style");
+        daChuyen = true;
+        return;
+      }
+
+      const scale = 1 + clickCount * 0.2;
+      btnNo.style.transform = `scale(${scale})`;
+
+      const maxX = window.innerWidth - btnNo.offsetWidth;
+      const maxY = window.innerHeight - btnNo.offsetHeight;
+
+      const randX = Math.floor(Math.random() * maxX);
+      const randY = Math.floor(Math.random() * maxY);
+
+      btnNo.style.left = `${randX}px`;
+      btnNo.style.top = `${randY}px`;
+    }
+  </script>
+</body>
+</html>

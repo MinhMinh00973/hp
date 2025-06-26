@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(270deg, orange, yellow, green, cyan, blue, violet);
+      background-size: 1500% 1500%;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      padding-top: 50px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .heart {
+      width: 100px;
+      height: 90px;
+      position: relative;
+      animation: rotateOut 2s ease-in-out forwards;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background: #ff0000;
+      border-radius: 50px 50px 0 0;
+    }
+
+    .heart::before {
+      left: 0;
+      transform: rotate(-45deg);
+      transform-origin: bottom right;
+    }
+
+    .heart::after {
+      right: 0;
+      transform: rotate(45deg);
+      transform-origin: bottom left;
+    }
+
+    @keyframes rotateOut {
+      0% { transform: rotate(0deg) scale(1); opacity: 1; }
+      80% { transform: rotate(360deg) scale(1.2); opacity: 1; }
+      100% { transform: rotate(360deg) scale(0); opacity: 0; }
+    }
+
+    .thank-text {
+      font-size: 2.8em;
+  font-weight: bold;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, #000000, #ff4081);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 8px rgba(255, 105, 180, 0.4);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: showText 2s ease-out forwards;
+  animation-delay: 2s;
+    }
+
+    .move-up {
+      animation: moveUp 1s ease forwards;
+      animation-delay: 4s;
+    }
+
+    .birthday-text {
+        font-size: 2.5em;
+  font-weight: bold;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, #f9d423, #ff4e50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 10px rgba(0, 191, 255, 0.4);
+  opacity: 0;
+  animation: showBirthday 1.5s ease-out forwards;
+  animation-delay: 5s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+    }
+
+    @keyframes showText {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes moveUp {
+      to { transform: translateY(-80px); }
+    }
+
+    @keyframes showBirthday {
+      to { opacity: 1; }
+    }
+
+    .floating-img {
+      position: absolute;
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      z-index: 1;
+    }
+
+    .floating-img.show {
+      opacity: 1;
+    }
+    
+  </style>
+</head>
+<body>
+   <audio autoplay loop hidden>
+    <source src="img/hp.mp3" type="audio/mpeg">
+  </audio>
+  <div class="center">
+    <div class="heart"></div>
+    <div id="thankText" class="thank-text">Hehe, tha lỗi rồi nheeeee 💖</div>
+    <div class="birthday-text">Chúc mừng sinh nhật Thu Hàaaa! 🎉🎂</div>
+  </div>
+
+  <script>
+    // Tạo vị trí rải đều không đè
+    const positions = [
+      [5, 20], [80, 8], [15, 85], [75, 75], [30, 20],
+      [60, 15], [10, 60], [50, 85], [30, 65], [85, 45]
+    ];
+
+    for (let i = 1; i <= 10; i++) {
+      const img = document.createElement('img');
+      img.src = `img/${i}.jpg`;
+      img.className = 'floating-img';
+
+      const [x, y] = positions[i - 1];
+      img.style.left = `${x}%`;
+      img.style.top = `${y}%`;
+      img.style.transform = 'translate(-50%, -50%)';
+
+      document.body.appendChild(img);
+    }
+
+    // Di chuyển chữ cảm ơn lên
+    setTimeout(() => {
+      document.getElementById('thankText').classList.add('move-up');
+    }, 4000);
+
+    // Hiện ảnh sau khi hiện "Chúc mừng sinh nhật"
+    setTimeout(() => {
+      document.querySelectorAll('.floating-img').forEach(img => {
+        img.classList.add('show');
+      });
+    }, 5500);
+
+    // Làm mờ và chuyển trang
+    setTimeout(() => {
+      document.body.style.transition = 'opacity 1s ease';
+      document.body.style.opacity = '0';
+    }, 11500);
+
+    setTimeout(() => {
+      window.location.href = 'thankyou/heart.html';
+    }, 12500);
+  </script>
+</body>
+</html>
